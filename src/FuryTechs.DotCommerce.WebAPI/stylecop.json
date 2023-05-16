@@ -1,0 +1,27 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "documentationCulture": "en-US",
+      "fileNamingConvention": "stylecop",
+      "xmlHeader": true,
+      "headerDecoration": "===============================================",
+      "companyName": "FuryTechs",
+      "copyrightText": "Copyright (c) {companyName}. All rights reserved."
+    },
+    "orderingRules": {
+      "blankLinesBetweenUsingGroups": "require",
+      "elementOrder": [ "kind", "accessibility" ],
+      "usingDirectivesPlacement": "insideNamespace",
+      "systemUsingDirectivesFirst": true
+    },
+    "readabilityRules": {
+      "allowBuiltInTypeAliases": true
+    },
+    "indentation": {
+      "useTabs": false,
+      "indentationSize": 2,
+      "tabSize": 2
+    }
+  }
+}

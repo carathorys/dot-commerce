@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="HotChocolate.Execution" Version="13.0.5" />
+        <PackageReference Include="HotChocolate.Execution.Abstractions" Version="13.0.5" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FuryTechs.DotCommerce.Core\FuryTechs.DotCommerce.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="stylecop.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Entities\Role.TypeConfig.cs">
+            <DependentUpon>Role.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\User.TypeConfig.cs">
+            <DependentUpon>User.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\RoleClaim.TypeConfig.cs">
+            <DependentUpon>RoleClaim.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\UserClaim.TypeConfig.cs">
+            <DependentUpon>UserClaim.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\UserLogin.TypeConfig.cs">
+            <DependentUpon>UserLogin.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\UserRole.TypeConfig.cs">
+            <DependentUpon>UserRole.cs</DependentUpon>
+        </Compile>
+        <Compile Update="Entities\UserToken.TypeConfig.cs">
+            <DependentUpon>UserToken.cs</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+</Project>

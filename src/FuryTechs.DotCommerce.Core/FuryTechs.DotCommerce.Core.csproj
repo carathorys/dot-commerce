@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
         <PackageReference Include="FuryTechs.BLM.EntityFrameworkCore" Version="7.0.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
         <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.0.5" />
@@ -17,6 +18,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="NetDevPack.Security.PasswordHasher.Argon2" Version="7.0.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     </ItemGroup>
 
@@ -26,6 +28,35 @@
 
     <ItemGroup>
         <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all" Condition="$(MSBuildProjectExtension) == '.csproj'" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Update="Properties\launchSettings.json">
+        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <AdditionalFiles Include="stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="GraphQL\Identity\Inputs\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Database\Base\DotCommerceEntity.TypeConfig.cs">
+        <DependentUpon>DotCommerceEntity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Database\Base\Entity.TypeConfigs.cs">
+        <DependentUpon>IEntity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Database\Base\LogicalDelete.TypeConfig.cs">
+        <DependentUpon>ILogicalDelete.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Database\Base\LogTimestamps.TypeConfig.cs">
+        <DependentUpon>ILogTimestamps.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
     <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

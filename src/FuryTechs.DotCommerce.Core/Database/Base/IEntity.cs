@@ -1,9 +1,22 @@
-using System.ComponentModel.DataAnnotations;
+// <copyright file="IEntity.cs" company="FuryTechs">
+// Copyright (c) FuryTechs. All rights reserved.
+// </copyright>
 
 namespace FuryTechs.DotCommerce.Core.Database.Base
 {
-  public interface IEntity<T>
+  using System.ComponentModel.DataAnnotations;
+
+  /// <summary>
+  /// IEntity interface to define an entity in this system.
+  /// </summary>
+  /// <typeparam name="TKey">Type of the primary key.</typeparam>
+  public interface IEntity<TKey>
+    where TKey : IEquatable<TKey>
   {
-    [Key] public T Id { get; set; }
+    /// <summary>
+    /// Primary key of an entity.
+    /// </summary>
+    [Key]
+    public TKey Id { get; set; }
   }
 }

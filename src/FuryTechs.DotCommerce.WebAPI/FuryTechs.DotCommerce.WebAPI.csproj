@@ -9,12 +9,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <AdditionalFiles Remove="stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="..\..\.dockerignore">
             <Link>.dockerignore</Link>
         </Content>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\FuryTechs.DotCommerce.CustomerPlugin\FuryTechs.DotCommerce.CustomerPlugin.csproj" />
         <ProjectReference Include="..\FuryTechs.DotCommerce.Core\FuryTechs.DotCommerce.Core.csproj" />
     </ItemGroup>
 
@@ -31,4 +35,10 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="stylecop.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </None>
+    </ItemGroup>
 </Project>

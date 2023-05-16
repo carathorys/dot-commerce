@@ -1,26 +1,26 @@
-using System.ComponentModel.DataAnnotations;
-using FuryTechs.BLM.NetStandard.Attributes;
-using Microsoft.EntityFrameworkCore;
+// <copyright file="DotCommerceEntity.cs" company="FuryTechs">
+// Copyright (c) FuryTechs. All rights reserved.
+// </copyright>
 
 namespace FuryTechs.DotCommerce.Core.Database.Base
 {
-  [Index(nameof(DeletedAt))]
-  [Index(nameof(CreatedAt))]
-  [Index(nameof(UpdatedAt))]
-  public abstract class DotCommerceEntity : ILogicalDelete<Guid>, ILogTimestamps<Guid>
+  using Microsoft.EntityFrameworkCore;
+
+  /// <summary>
+  /// An abstraction to handle most common things.
+  /// </summary>
+  /// <typeparam name="TKey">Key of the entity.</typeparam>
+  [EntityTypeConfiguration(typeof(DotCommerceEntityTypeConfig<,>))]
+  public abstract class DotCommerceEntity<TKey> : IEntity<TKey>, ILogTimestamps
+    where TKey : IEquatable<TKey>
   {
     /// <inheritdoc cref="IEntity{T}.Id"/>
-    [Key]
-    public Guid Id { get; set; }
+    public TKey Id { get; set; } = default!;
 
-    /// <inheritdoc cref="ILogicalDelete{T}.DeletedAt"/>
-    [LogicalDelete]
-    public DateTimeOffset? DeletedAt { get; set; }
-
-    /// <inheritdoc cref="ILogTimestamps{T}.CreatedAt"/>
+    /// <inheritdoc cref="ILogTimestamps.CreatedAt"/>
     public DateTimeOffset CreatedAt { get; set; }
 
-    /// <inheritdoc cref="ILogTimestamps{T}.UpdatedAt"/>
+    /// <inheritdoc cref="ILogTimestamps.UpdatedAt"/>
     public DateTimeOffset UpdatedAt { get; set; }
   }
 }

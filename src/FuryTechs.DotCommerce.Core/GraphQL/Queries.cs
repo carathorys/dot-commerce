@@ -1,9 +1,12 @@
-namespace FuryTechs.DotCommerce.Core.GraphQL
+// <copyright file="Queries.cs" company="FuryTechs">
+// Copyright (c) FuryTechs. All rights reserved.
+// </copyright>
+
+namespace FuryTechs.DotCommerce.Core.GraphQL;
+
+/// <summary>
+/// Collection for Queries.
+/// </summary>
+public class Queries
 {
-  /// <summary>
-  /// Collection for Queries.
-  /// </summary>
-  public class Queries
-  {
-  }
 }

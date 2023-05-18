@@ -1,7 +1,3 @@
-// <copyright file="GraphQLExtesnsions.cs" company="FuryTechs">
-// Copyright (c) FuryTechs. All rights reserved.
-// </copyright>
-
 using FuryTechs.DotCommerce.Core.GraphQL.Identity;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Types;
 using FuryTechs.DotCommerce.Identity.GraphQL;

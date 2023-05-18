@@ -1,7 +1,3 @@
-// <copyright file="UserLogin.cs" company="FuryTechs">
-// Copyright (c) FuryTechs. All rights reserved.
-// </copyright>
-
 namespace FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 
 using System.ComponentModel.DataAnnotations.Schema;

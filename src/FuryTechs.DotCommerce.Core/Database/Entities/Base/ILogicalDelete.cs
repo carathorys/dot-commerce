@@ -1,7 +1,3 @@
-// <copyright file="ILogicalDelete.cs" company="FuryTechs">
-// Copyright (c) FuryTechs. All rights reserved.
-// </copyright>
-
 namespace FuryTechs.DotCommerce.Core.Database.Entities.Base;
 
 using FuryTechs.BLM.NetStandard.Attributes;

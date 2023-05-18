@@ -1,7 +1,3 @@
-// <copyright file="ServiceCollectionExtensions.cs" company="FuryTechs">
-// Copyright (c) FuryTechs. All rights reserved.
-// </copyright>
-
 namespace FuryTechs.DotCommerce.Core.Extensions;
 
 using FuryTechs.DotCommerce.Core.Database;

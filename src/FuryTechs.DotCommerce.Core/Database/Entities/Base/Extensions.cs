@@ -1,7 +1,3 @@
-// <copyright file="Extensions.cs" company="FuryTechs">
-// Copyright (c) FuryTechs. All rights reserved.
-// </copyright>
-
 namespace FuryTechs.DotCommerce.Core.Database.Entities.Base;
 
 using Microsoft.EntityFrameworkCore;

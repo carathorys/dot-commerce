@@ -11,16 +11,6 @@
     <ItemGroup>
       <AdditionalFiles Remove="stylecop.json" />
     </ItemGroup>
-    <ItemGroup>
-        <Content Include="..\..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\FuryTechs.DotCommerce.CustomerPlugin\FuryTechs.DotCommerce.CustomerPlugin.csproj" />
-        <ProjectReference Include="..\FuryTechs.DotCommerce.Core\FuryTechs.DotCommerce.Core.csproj" />
-    </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
@@ -40,5 +30,9 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FuryTechs.DotCommerce.Core\FuryTechs.DotCommerce.Core.csproj" />
     </ItemGroup>
 </Project>

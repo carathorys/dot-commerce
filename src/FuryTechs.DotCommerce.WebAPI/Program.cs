@@ -1,20 +1,28 @@
-using FuryTechs.DotCommerce.Core;
+using FuryTechs.DotCommerce.Core.Extensions;
+using FuryTechs.DotCommerce.WebAPI;
 
-namespace FuryTechs.DotCommerce.WebAPI;
+var builder = WebApplication.CreateBuilder(args);
 
-public static class Program
+// Add services to the container.
+builder.Services.AddDatabaseContext<WebDbContext>(builder.Configuration);
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-  public static void Main(params string[] args)
-  {
-    CreateHostBuilder(args).Build().Run();
-  }
-
-  private static IHostBuilder CreateHostBuilder(string[] args)
-  {
-    return Host
-      .CreateDefaultBuilder(args)
-      .ConfigureWebHostDefaults(x =>
-        x.UseStartup<Bootstrap<WebDbContext>>()
-      );
-  }
+  // app.UseSwagger();
+  // app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

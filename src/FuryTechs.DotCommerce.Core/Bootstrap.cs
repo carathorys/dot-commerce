@@ -7,18 +7,21 @@ namespace FuryTechs.DotCommerce.Core
   using FuryTechs.DotCommerce.Core.Database;
   using FuryTechs.DotCommerce.Core.Extensions;
   using Microsoft.AspNetCore.Builder;
+  using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
 
   /// <summary>
   /// Temporary class to help bootstrapping application.
   /// </summary>
-  /// <typeparam name="TDbContext">Type of the database context</typeparam>
-  public class Bootstrap<TDbContext>
-    where TDbContext : BaseDbContext
+  /// <typeparam name="TDbContext">Type of the database context.</typeparam>
+  /// <typeparam name="TKey">Primary key type of tables.</typeparam>
+  public class Bootstrap<TDbContext, TKey>
+    where TDbContext : DbContext
+    where TKey : IEquatable<TKey>
   {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Bootstrap{TDbContext}"/> class.
+    /// Initializes a new instance of the <see cref="Bootstrap{TDbContext, TKey}"/> class.
     /// </summary>
     /// <param name="configuration">Configuration object to use.</param>
     public Bootstrap(IConfiguration configuration)
@@ -35,12 +38,10 @@ namespace FuryTechs.DotCommerce.Core
     /// Standard ConfigureServices.
     /// </summary>
     /// <param name="services">Services.</param>
-    /// <typeparam name="TDbContext">Database context's type.</typeparam>
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddHttpContextAccessor();
       services
-        .AddDotCommerceDbContext<TDbContext>(this.Configuration)
         .AddPublicGraphqlEndpoint(this.Configuration);
     }
 

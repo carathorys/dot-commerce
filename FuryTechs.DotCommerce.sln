@@ -18,9 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Makefile = Makefile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.DotCommerce.CustomerPlugin", "src\FuryTechs.DotCommerce.CustomerPlugin\FuryTechs.DotCommerce.CustomerPlugin.csproj", "{AB41E756-4F47-4671-862C-CC31D7CB6F90}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuryTechs.DotCommerce.IdentityPlugin", "src\FuryTechs.DotCommerce.IdentityPlugin\FuryTechs.DotCommerce.IdentityPlugin.csproj", "{02247BE0-86E4-42AA-8F34-2C34A7A23B82}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{19F60032-BFC1-4960-94E6-9E397FD1B5E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,8 +28,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7AAB9C21-A3C1-4F86-9358-CA0F8366CBBC} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
 		{54A972DD-E25F-449A-BF9F-145E957E6E4D} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
-		{AB41E756-4F47-4671-862C-CC31D7CB6F90} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
-		{02247BE0-86E4-42AA-8F34-2C34A7A23B82} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
+		{19F60032-BFC1-4960-94E6-9E397FD1B5E5} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7AAB9C21-A3C1-4F86-9358-CA0F8366CBBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,13 +39,5 @@ Global
 		{54A972DD-E25F-449A-BF9F-145E957E6E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54A972DD-E25F-449A-BF9F-145E957E6E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54A972DD-E25F-449A-BF9F-145E957E6E4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB41E756-4F47-4671-862C-CC31D7CB6F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB41E756-4F47-4671-862C-CC31D7CB6F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB41E756-4F47-4671-862C-CC31D7CB6F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB41E756-4F47-4671-862C-CC31D7CB6F90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02247BE0-86E4-42AA-8F34-2C34A7A23B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02247BE0-86E4-42AA-8F34-2C34A7A23B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02247BE0-86E4-42AA-8F34-2C34A7A23B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02247BE0-86E4-42AA-8F34-2C34A7A23B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

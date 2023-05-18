@@ -16,9 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 		Makefile = Makefile
+		Default.Build.props = Default.Build.props
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{19F60032-BFC1-4960-94E6-9E397FD1B5E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,7 +27,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7AAB9C21-A3C1-4F86-9358-CA0F8366CBBC} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
 		{54A972DD-E25F-449A-BF9F-145E957E6E4D} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
-		{19F60032-BFC1-4960-94E6-9E397FD1B5E5} = {DA6FD8D4-98B9-40CB-B648-449DBB81C478}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7AAB9C21-A3C1-4F86-9358-CA0F8366CBBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

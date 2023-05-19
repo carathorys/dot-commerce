@@ -8,6 +8,4 @@ public class WebDbContext : BaseDbContext
   public WebDbContext(DbContextOptions<WebDbContext> options) : base(options)
   {
   }
-  
-  
 }

@@ -1,3 +1,7 @@
+using System.Reflection;
+using FuryTechs.DotCommerce.Core.Database.Entities.Customer;
+using FuryTechs.DotCommerce.Core.Database.Entities.System;
+
 namespace FuryTechs.DotCommerce.Core.Database;
 
 using FuryTechs.DotCommerce.Core.Database.Entities.Base;
@@ -35,6 +39,33 @@ public abstract class BaseDbContext<TKey> : IdentityDbContext<
     builder.Entity<UserLogin<TKey>>().SetupEntity<UserLogin<TKey>, TKey>("identity_user_login");
     builder.Entity<UserRole<TKey>>().SetupEntity<UserRole<TKey>, TKey>("identity_user_role");
     builder.Entity<UserToken<TKey>>().SetupEntity<UserToken<TKey>, TKey>("identity_user_token");
+    builder.Entity<Channel<TKey>>();
+
+    var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+      .Where(t => t.GetInterfaces().Any(gi =>
+        gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>))).ToList();
+
+
+    foreach (var configurationInstance in typesToRegister
+               .Select(type => type.IsGenericType switch
+               {
+                 // For generic type, if the TypeParameter is TKey only,
+                 // provide the type of TKey generic parameter
+                 true when type
+                   .GetGenericArguments()
+                   .All(x => x.Name == nameof(TKey)) => type.MakeGenericType(typeof(TKey)),
+                 // If not a generic type, simply create a new instance from it
+                 false => type,
+                 // Otherwise throw new InvalidOperationException
+                 _ => throw new InvalidOperationException()
+               })
+               .Select(finalType =>
+                 Activator.CreateInstance(finalType) ?? throw new InvalidOperationException()
+               )
+            )
+    {
+      builder.ApplyConfiguration((dynamic)configurationInstance);
+    }
   }
 }
 

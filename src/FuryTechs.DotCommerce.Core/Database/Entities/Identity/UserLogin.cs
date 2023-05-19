@@ -1,11 +1,9 @@
 namespace FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 
-using System.ComponentModel.DataAnnotations.Schema;
 using FuryTechs.DotCommerce.Core.Database.Entities.Base;
 using Microsoft.AspNetCore.Identity;
 
 /// <inheritdoc cref="IdentityUserLogin{TKey}" />
-[Table("identity_user_login")]
 public class UserLogin<TKey> : IdentityUserLogin<TKey>, ILogTimestamps
   where TKey : IEquatable<TKey>
 {

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FuryTechs.DotCommerce.WebAPI.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20230518042319_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20230519083050_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -334,6 +334,45 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasName("pk_identity_user_token");
 
                     b.ToTable("identity_user_token", (string)null);
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("token");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_channel");
+
+                    b.HasIndex("Token")
+                        .IsUnique()
+                        .HasDatabaseName("ix_channel_token");
+
+                    b.ToTable("channel", (string)null);
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<int>", b =>

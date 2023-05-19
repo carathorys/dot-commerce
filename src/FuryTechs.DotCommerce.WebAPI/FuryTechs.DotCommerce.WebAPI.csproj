@@ -16,14 +16,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
-    <PackageReference
-      Include="SonarAnalyzer.CSharp"
-      Version="9.0.0.68202"
-      PrivateAssets="all"
-      Condition="$(MSBuildProjectExtension) == '.csproj'"
-    />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.0.0.68202" PrivateAssets="all" Condition="$(MSBuildProjectExtension) == '.csproj'" />
   </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\FuryTechs.DotCommerce.Core\FuryTechs.DotCommerce.Core.csproj" />

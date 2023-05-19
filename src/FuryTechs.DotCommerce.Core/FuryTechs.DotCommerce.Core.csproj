@@ -7,7 +7,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
     <PackageReference Include="FuryTechs.BLM.EntityFrameworkCore" Version="7.0.0" />
@@ -17,16 +17,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"
-      Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="NetDevPack.Security.PasswordHasher.Argon2" Version="7.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
-    <PackageReference
-      Include="SonarAnalyzer.CSharp"
-      Version="9.0.0.68202"
-      PrivateAssets="all"
-      Condition="$(MSBuildProjectExtension) == '.csproj'"
-    />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.0.0.68202" PrivateAssets="all" Condition="$(MSBuildProjectExtension) == '.csproj'" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Database\Entities\System\Channel.TypeConfig.cs">
+      <DependentUpon>Channel.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

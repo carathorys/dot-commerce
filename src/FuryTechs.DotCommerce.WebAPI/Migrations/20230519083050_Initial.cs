@@ -7,11 +7,27 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FuryTechs.DotCommerce.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "channel",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    token = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_channel", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "identity_role",
                 columns: table => new
@@ -176,6 +192,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "ix_channel_token",
+                table: "channel",
+                column: "token",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "identity_role",
                 column: "normalized_name",
@@ -216,6 +238,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "channel");
+
             migrationBuilder.DropTable(
                 name: "identity_role_claim");
 

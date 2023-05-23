@@ -37,8 +37,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("concurrency_stamp");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -51,15 +53,23 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("normalized_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("Id")
                         .HasName("pk_identity_role");
 
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_role_created_at");
+
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_role_updated_at");
 
                     b.ToTable("identity_role", (string)null);
                 });
@@ -82,22 +92,32 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("claim_value");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer")
                         .HasColumnName("role_id");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("Id")
                         .HasName("pk_identity_role_claim");
 
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_role_claim_created_at");
+
                     b.HasIndex("RoleId")
                         .HasDatabaseName("ix_identity_role_claim_role_id");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_role_claim_updated_at");
 
                     b.ToTable("identity_role_claim", (string)null);
                 });
@@ -121,8 +141,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("concurrency_stamp");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -172,8 +194,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("two_factor_enabled");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -183,12 +207,18 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.HasKey("Id")
                         .HasName("pk_identity_user");
 
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_user_created_at");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_user_updated_at");
 
                     b.ToTable("identity_user", (string)null);
                 });
@@ -211,12 +241,16 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("claim_value");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
@@ -224,6 +258,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_identity_user_claim");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_user_claim_created_at");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_user_claim_updated_at");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_identity_user_claim_user_id");
@@ -242,16 +282,20 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("provider_key");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text")
                         .HasColumnName("provider_display_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
@@ -259,6 +303,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey")
                         .HasName("pk_identity_user_login");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_user_login_created_at");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_user_login_updated_at");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_identity_user_login_user_id");
@@ -277,22 +327,32 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("role_id");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("UserId", "RoleId")
                         .HasName("pk_identity_user_role");
 
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_user_role_created_at");
+
                     b.HasIndex("RoleId")
                         .HasDatabaseName("ix_identity_user_role_role_id");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_user_role_updated_at");
 
                     b.ToTable("identity_user_role", (string)null);
                 });
@@ -312,16 +372,20 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("name");
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("deleted_at");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Value")
                         .HasColumnType("text")
@@ -329,6 +393,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name")
                         .HasName("pk_identity_user_token");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_identity_user_token_created_at");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_identity_user_token_updated_at");
 
                     b.ToTable("identity_user_token", (string)null);
                 });
@@ -343,8 +413,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -359,17 +431,74 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("token");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
 
                     b.HasKey("Id")
                         .HasName("pk_channel");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_channel_created_at");
 
                     b.HasIndex("Token")
                         .IsUnique()
                         .HasDatabaseName("ix_channel_token");
 
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_channel_updated_at");
+
                     b.ToTable("channel", (string)null);
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("character varying(6)")
+                        .HasColumnName("code");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("display_name");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.HasKey("Id")
+                        .HasName("pk_language");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("ix_language_code");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_language_created_at");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_language_updated_at");
+
+                    b.ToTable("language", (string)null);
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<int>", b =>
@@ -379,7 +508,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_identity_role_claim_identity_role_role_id");
+                        .HasConstraintName("fk_identity_role_claim_asp_net_roles_role_id");
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserClaim<int>", b =>
@@ -389,7 +518,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_identity_user_claim_identity_user_user_id");
+                        .HasConstraintName("fk_identity_user_claim_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserLogin<int>", b =>
@@ -399,7 +528,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_identity_user_login_identity_user_user_id");
+                        .HasConstraintName("fk_identity_user_login_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserRole<int>", b =>
@@ -416,7 +545,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_identity_user_role_identity_user_user_id");
+                        .HasConstraintName("fk_identity_user_role_asp_net_users_user_id");
                 });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserToken<int>", b =>
@@ -426,7 +555,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_identity_user_token_identity_user_user_id");
+                        .HasConstraintName("fk_identity_user_token_asp_net_users_user_id");
                 });
 #pragma warning restore 612, 618
         }

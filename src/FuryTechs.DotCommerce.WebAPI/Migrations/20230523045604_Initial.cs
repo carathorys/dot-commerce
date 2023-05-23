@@ -20,8 +20,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     token = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
@@ -34,8 +34,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     concurrency_stamp = table.Column<string>(type: "text", nullable: true)
@@ -51,8 +51,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -74,13 +74,29 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "language",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    display_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    code = table.Column<string>(type: "character varying(6)", maxLength: 6, nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_language", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "identity_role_claim",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     role_id = table.Column<int>(type: "integer", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
@@ -89,7 +105,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     table.PrimaryKey("pk_identity_role_claim", x => x.id);
                     table.ForeignKey(
-                        name: "fk_identity_role_claim_identity_role_role_id",
+                        name: "fk_identity_role_claim_asp_net_roles_role_id",
                         column: x => x.role_id,
                         principalTable: "identity_role",
                         principalColumn: "id",
@@ -102,8 +118,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     user_id = table.Column<int>(type: "integer", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
@@ -112,7 +128,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     table.PrimaryKey("pk_identity_user_claim", x => x.id);
                     table.ForeignKey(
-                        name: "fk_identity_user_claim_identity_user_user_id",
+                        name: "fk_identity_user_claim_asp_net_users_user_id",
                         column: x => x.user_id,
                         principalTable: "identity_user",
                         principalColumn: "id",
@@ -125,8 +141,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     provider_key = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     provider_display_name = table.Column<string>(type: "text", nullable: true),
                     user_id = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -134,7 +150,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     table.PrimaryKey("pk_identity_user_login", x => new { x.login_provider, x.provider_key });
                     table.ForeignKey(
-                        name: "fk_identity_user_login_identity_user_user_id",
+                        name: "fk_identity_user_login_asp_net_users_user_id",
                         column: x => x.user_id,
                         principalTable: "identity_user",
                         principalColumn: "id",
@@ -147,23 +163,23 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     user_id = table.Column<int>(type: "integer", nullable: false),
                     role_id = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     deleted_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_identity_user_role", x => new { x.user_id, x.role_id });
                     table.ForeignKey(
-                        name: "fk_identity_user_role_identity_role_role_id",
-                        column: x => x.role_id,
-                        principalTable: "identity_role",
+                        name: "fk_identity_user_role_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "identity_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_identity_user_role_identity_user_user_id",
-                        column: x => x.user_id,
-                        principalTable: "identity_user",
+                        name: "fk_identity_user_role_identity_role_role_id",
+                        column: x => x.role_id,
+                        principalTable: "identity_role",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -175,8 +191,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     user_id = table.Column<int>(type: "integer", nullable: false),
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     deleted_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     value = table.Column<string>(type: "text", nullable: true)
                 },
@@ -184,12 +200,17 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 {
                     table.PrimaryKey("pk_identity_user_token", x => new { x.user_id, x.login_provider, x.name });
                     table.ForeignKey(
-                        name: "fk_identity_user_token_identity_user_user_id",
+                        name: "fk_identity_user_token_asp_net_users_user_id",
                         column: x => x.user_id,
                         principalTable: "identity_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_channel_created_at",
+                table: "channel",
+                column: "created_at");
 
             migrationBuilder.CreateIndex(
                 name: "ix_channel_token",
@@ -198,10 +219,30 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_channel_updated_at",
+                table: "channel",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_role_created_at",
+                table: "identity_role",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_role_updated_at",
+                table: "identity_role",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "identity_role",
                 column: "normalized_name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_role_claim_created_at",
+                table: "identity_role_claim",
+                column: "created_at");
 
             migrationBuilder.CreateIndex(
                 name: "ix_identity_role_claim_role_id",
@@ -209,9 +250,24 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 column: "role_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_identity_role_claim_updated_at",
+                table: "identity_role_claim",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "identity_user",
                 column: "normalized_email");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_created_at",
+                table: "identity_user",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_updated_at",
+                table: "identity_user",
+                column: "updated_at");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -220,9 +276,29 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_identity_user_claim_created_at",
+                table: "identity_user_claim",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_claim_updated_at",
+                table: "identity_user_claim",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_identity_user_claim_user_id",
                 table: "identity_user_claim",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_login_created_at",
+                table: "identity_user_login",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_login_updated_at",
+                table: "identity_user_login",
+                column: "updated_at");
 
             migrationBuilder.CreateIndex(
                 name: "ix_identity_user_login_user_id",
@@ -230,9 +306,45 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_identity_user_role_created_at",
+                table: "identity_user_role",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_identity_user_role_role_id",
                 table: "identity_user_role",
                 column: "role_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_role_updated_at",
+                table: "identity_user_role",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_token_created_at",
+                table: "identity_user_token",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_identity_user_token_updated_at",
+                table: "identity_user_token",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_language_code",
+                table: "language",
+                column: "code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_language_created_at",
+                table: "language",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_language_updated_at",
+                table: "language",
+                column: "updated_at");
         }
 
         /// <inheritdoc />
@@ -255,6 +367,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "identity_user_token");
+
+            migrationBuilder.DropTable(
+                name: "language");
 
             migrationBuilder.DropTable(
                 name: "identity_role");

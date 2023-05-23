@@ -1,6 +1,7 @@
 using System.Reflection;
 using FuryTechs.DotCommerce.Core.Database.Entities.Customer;
 using FuryTechs.DotCommerce.Core.Database.Entities.System;
+using FuryTechs.DotCommerce.Core.Database.TypeConfigurations.Base;
 
 namespace FuryTechs.DotCommerce.Core.Database;
 
@@ -32,18 +33,10 @@ public abstract class BaseDbContext<TKey> : IdentityDbContext<
   protected override void OnModelCreating(ModelBuilder builder)
   {
     base.OnModelCreating(builder);
-    builder.Entity<Role<TKey>>().SetupEntity<Role<TKey>, TKey>("identity_role");
-    builder.Entity<RoleClaim<TKey>>().SetupEntity<RoleClaim<TKey>, TKey>("identity_role_claim");
-    builder.Entity<User<TKey>>().SetupEntity<User<TKey>, TKey>("identity_user");
-    builder.Entity<UserClaim<TKey>>().SetupEntity<UserClaim<TKey>, TKey>("identity_user_claim");
-    builder.Entity<UserLogin<TKey>>().SetupEntity<UserLogin<TKey>, TKey>("identity_user_login");
-    builder.Entity<UserRole<TKey>>().SetupEntity<UserRole<TKey>, TKey>("identity_user_role");
-    builder.Entity<UserToken<TKey>>().SetupEntity<UserToken<TKey>, TKey>("identity_user_token");
-    builder.Entity<Channel<TKey>>();
 
     var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-      .Where(t => t.GetInterfaces().Any(gi =>
-        gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>))).ToList();
+      .Where(t => !t.IsAbstract && t.GetInterfaces().Any(gi =>
+        gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IDotCommerceEntityTypeConfig<>))).ToList();
 
 
     foreach (var configurationInstance in typesToRegister
@@ -53,18 +46,19 @@ public abstract class BaseDbContext<TKey> : IdentityDbContext<
                  // provide the type of TKey generic parameter
                  true when type
                    .GetGenericArguments()
-                   .All(x => x.Name == nameof(TKey)) => type.MakeGenericType(typeof(TKey)),
+                   .All(x => x is { Name: nameof(TKey), IsAbstract: false }) => type.MakeGenericType(typeof(TKey)),
                  // If not a generic type, simply create a new instance from it
                  false => type,
-                 // Otherwise throw new InvalidOperationException
-                 _ => throw new InvalidOperationException()
+                 // Otherwise return with a default value (null)
+                 _ => default
                })
-               .Select(finalType =>
-                 Activator.CreateInstance(finalType) ?? throw new InvalidOperationException()
-               )
+               .Select(finalType => finalType != default ? Activator.CreateInstance(finalType) : default)
             )
     {
-      builder.ApplyConfiguration((dynamic)configurationInstance);
+      if (configurationInstance != default)
+      {
+        builder.ApplyConfiguration((dynamic)configurationInstance);
+      }
     }
   }
 }

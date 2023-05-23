@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FuryTechs.DotCommerce.Core.Database.Entities.Base;
+using FuryTechs.DotCommerce.Core.Database.Entities.Customer;
 
 namespace FuryTechs.DotCommerce.Core.Database.Entities.System;
 
@@ -11,9 +12,14 @@ public class Language<TKey> : DotCommerceEntity<TKey>
   where TKey : IEquatable<TKey>
 {
   /// <summary>
-  /// 
+  /// Name of the language (not translatable)
   /// </summary>
-  [MaxLength(5)][Required(AllowEmptyStrings = false)] public string CountryCode { get; set; } = default!;
-
-  public bool IsDefault { get; set; }
+  [MaxLength(100)]
+  public string DisplayName { get; set; }
+  
+  /// <summary>
+  /// Code of the language
+  /// </summary>
+  [MaxLength(6)] 
+  public string Code { get; set; }
 }

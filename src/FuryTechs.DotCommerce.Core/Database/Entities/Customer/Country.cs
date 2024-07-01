@@ -17,7 +17,5 @@ public class CountryTranslation<TKey> : EntityTranslation<TKey, Country<TKey>>
 public class Country<TKey> : MultilLingualObject<TKey, CountryTranslation<TKey>, Country<TKey>>
   where TKey : IEquatable<TKey>
 {
-    public ICollection<CountryTranslation<TKey>> Translations { get; set; }
-
     public string CountryCode { get; set; }
 }

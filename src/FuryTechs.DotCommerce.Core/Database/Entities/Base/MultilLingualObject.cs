@@ -5,6 +5,6 @@
         where TEntity : DotCommerceEntity<TKey>
         where TTranslation: EntityTranslation<TKey, TEntity>
     {
-        public ICollection<TTranslation> Translations { get; set; }
+        public required ICollection<TTranslation> Translations { get; set; }
     }
 }

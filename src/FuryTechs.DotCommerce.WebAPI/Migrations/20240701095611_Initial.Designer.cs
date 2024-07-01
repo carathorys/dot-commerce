@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FuryTechs.DotCommerce.WebAPI.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20240701083918_Initial")]
+    [Migration("20240701095611_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,14 +25,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
@@ -40,13 +38,13 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("country_code");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -67,17 +65,15 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("country", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BaseId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("BaseId")
+                        .HasColumnType("uuid")
                         .HasColumnName("base_id");
 
                     b.Property<string>("CountryName")
@@ -89,8 +85,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int>("LanguageId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uuid")
                         .HasColumnName("language_id");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
@@ -109,14 +105,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("country_translation", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -124,7 +118,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("concurrency_stamp");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -140,7 +134,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("normalized_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -161,7 +155,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_role", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,17 +173,17 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("claim_value");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("role_id");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -209,14 +203,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_role_claim", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer")
@@ -228,7 +220,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("concurrency_stamp");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -281,7 +273,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("two_factor_enabled");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -310,7 +302,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_user", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserClaim<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -328,19 +320,19 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("claim_value");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
@@ -358,7 +350,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_user_claim", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserLogin<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text")
@@ -369,7 +361,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("provider_key");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -379,13 +371,13 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("provider_display_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey")
@@ -403,18 +395,18 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_user_login", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserRole<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserRole<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
                         .HasColumnName("role_id");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -424,7 +416,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("deleted_at");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -444,10 +436,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_user_role", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserToken<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserToken<System.Guid>", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
@@ -459,7 +451,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("name");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -469,7 +461,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("deleted_at");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -490,23 +482,21 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("identity_user_token", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("DefaultLanguageId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("DefaultLanguageId")
+                        .HasColumnType("uuid")
                         .HasColumnName("default_language_id");
 
                     b.Property<string>("Description")
@@ -522,7 +512,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("token");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -546,14 +536,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("channel", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -562,7 +550,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("code");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
@@ -574,7 +562,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("display_name");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnUpdateSometimes()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at")
                         .HasDefaultValueSql("NOW()");
@@ -597,12 +585,12 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
             modelBuilder.Entity("channels_languages", b =>
                 {
-                    b.Property<int>("AvailableLanguagesId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("AvailableLanguagesId")
+                        .HasColumnType("uuid")
                         .HasColumnName("available_languages_id");
 
-                    b.Property<int>("ChannelId")
-                        .HasColumnType("integer")
+                    b.Property<Guid>("ChannelId")
+                        .HasColumnType("uuid")
                         .HasColumnName("channel_id");
 
                     b.HasKey("AvailableLanguagesId", "ChannelId")
@@ -614,30 +602,30 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("channels_languages", (string)null);
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", "Base")
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<System.Guid>", "Base")
                         .WithMany("Translations")
                         .HasForeignKey("BaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_country_translation_country_base_id");
 
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", "Language")
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<System.Guid>", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_country_translation_language_int_language_id");
+                        .HasConstraintName("fk_country_translation_language_guid_language_id");
 
                     b.Navigation("Base");
 
                     b.Navigation("Language");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -645,9 +633,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_identity_role_claim_asp_net_roles_role_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserClaim<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -655,9 +643,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_identity_user_claim_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserLogin<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -665,16 +653,16 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_identity_user_login_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserRole<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserRole<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_identity_user_role_identity_role_role_id");
 
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -682,9 +670,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_identity_user_role_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserToken<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.UserToken<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.User<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -692,28 +680,28 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_identity_user_token_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<System.Guid>", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", "DefaultLanguage")
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<System.Guid>", "DefaultLanguage")
                         .WithMany()
                         .HasForeignKey("DefaultLanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_channel_language_int_default_language_id");
+                        .HasConstraintName("fk_channel_language_guid_default_language_id");
 
                     b.Navigation("DefaultLanguage");
                 });
 
             modelBuilder.Entity("channels_languages", b =>
                 {
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("AvailableLanguagesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_channels_languages_language_int_available_languages_id");
+                        .HasConstraintName("fk_channels_languages_language_guid_available_languages_id");
 
-                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", null)
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("ChannelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -721,7 +709,7 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasConstraintName("fk_channels_languages_channel_channel_id");
                 });
 
-            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", b =>
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<System.Guid>", b =>
                 {
                     b.Navigation("Translations");
                 });

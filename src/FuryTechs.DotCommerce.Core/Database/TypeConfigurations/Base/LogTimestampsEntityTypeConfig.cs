@@ -13,14 +13,12 @@ public abstract class LogTimestampsEntityTypeConfig<TEntity>
   {
     builder.Property(x => x.CreatedAt)
       .ValueGeneratedOnAdd()
-      .HasDefaultValueSql("NOW()")
-      .ValueGeneratedOnUpdateSometimes();
+      .HasDefaultValueSql(sql: "NOW()");
 
     builder
       .Property(x => x.UpdatedAt)
       .ValueGeneratedOnAddOrUpdate()
-      .HasDefaultValueSql("NOW()")
-      .ValueGeneratedOnUpdateSometimes();
+      .HasDefaultValueSql(sql: "NOW()");
 
     builder.HasIndex(x => x.CreatedAt);
     builder.HasIndex(x => x.UpdatedAt);

@@ -4,6 +4,7 @@ using FuryTechs.DotCommerce.Core.Database.TypeConfigurations.Base;
 
 namespace FuryTechs.DotCommerce.Core.Database;
 
+using FuryTechs.DotCommerce.Core.Database.Entities.Customer;
 using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,6 +23,9 @@ public abstract class BaseDbContext<TKey> : IdentityDbContext<
 >
   where TKey : IEquatable<TKey>
 {
+    public DbSet<Customer<TKey>> Customers { get; set; }
+
+
     /// <inheritdoc cref="IdentityDbContext{User,TRole,TKey,TUserClaim,TUserRole,TUserLogin,TRoleClaim,TUserToken}" />
     protected BaseDbContext(DbContextOptions options)
     : base(options)

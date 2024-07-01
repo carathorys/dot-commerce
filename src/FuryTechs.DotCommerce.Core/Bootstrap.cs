@@ -4,8 +4,14 @@
 
 namespace FuryTechs.DotCommerce.Core;
 
+using FuryTechs.DotCommerce.Core.Database;
+using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 using FuryTechs.DotCommerce.Core.Extensions;
+using FuryTechs.DotCommerce.Core.GraphQL.Identity;
+using FuryTechs.DotCommerce.Identity.GraphQL;
+
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,43 +19,62 @@ using Microsoft.Extensions.DependencyInjection;
 /// Temporary class to help bootstrapping application.
 /// </summary>
 /// <typeparam name="TKey">Primary key type of tables.</typeparam>
-public class Bootstrap<TKey> where TKey : IEquatable<TKey>
+public class Bootstrap<TKey, TDbContext>
+    where TKey : IEquatable<TKey>
+    where TDbContext : BaseDbContext
 {
-  /// <summary>
-  /// Initializes a new instance of the <see cref="Bootstrap{TKey}"/> class.
-  /// </summary>
-  /// <param name="configuration">Configuration object to use.</param>
-  public Bootstrap(IConfiguration configuration)
-  {
-    this.Configuration = configuration;
-  }
+    private WebApplication app;
 
-  /// <summary>
-  /// Gets the configuration root.
-  /// </summary>
-  private IConfiguration Configuration { get; }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Bootstrap{TKey}"/> class.
+    /// </summary>
+    /// <param name="configuration">Configuration object to use.</param>
+    public Bootstrap(IConfiguration configuration)
+    {
+        this.Configuration = configuration;
+    }
 
-  /// <summary>
-  /// Standard ConfigureServices.
-  /// </summary>
-  /// <param name="services">Services.</param>
-  public void ConfigureServices(IServiceCollection services)
-  {
-    services.AddHttpContextAccessor();
-    services
-      .AddPublicGraphqlEndpoint(this.Configuration);
-  }
+    /// <summary>
+    /// Gets the configuration root.
+    /// </summary>
+    private IConfiguration Configuration { get; }
 
-  /// <summary>
-  /// Standard AppBuilder configuration.
-  /// </summary>
-  /// <param name="app">ApplicationBuilder instance.</param>
-  public void Configure(IApplicationBuilder app)
-  {
-    app
-      .UseAuthentication()
-      .UseAuthorization()
-      .UseRouting()
-      .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
-  }
+    /// <summary>
+    /// Standard ConfigureServices.
+    /// </summary>
+    /// <param name="services">Services.</param>
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddIdentity<User<TKey>, Role<TKey>>()
+            .AddRoleManager<RoleManager<Role<TKey>>>()
+            .AddSignInManager()
+            .AddEntityFrameworkStores<TDbContext>();
+        services.AddAuthorization()
+            .AddAuthentication()
+            .AddJwtBearer();
+        services.AddHttpContextAccessor();
+        services.AddDatabaseContext<TDbContext>(this.Configuration);
+        services
+          .AddPublicGraphqlEndpoint(this.Configuration)
+          .AddIdentity<TKey>();
+    }
+
+    /// <summary>
+    /// Standard AppBuilder configuration.
+    /// </summary>
+    /// <param name="app">ApplicationBuilder instance.</param>
+    public void Configure(WebApplication app)
+    {
+        this.app = app;
+        this.app
+          .UseAuthentication()
+          .UseAuthorization()
+          .UseRouting()
+          .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+    }
+
+    public void Run()
+    {
+        this.app.Run();
+    }
 }

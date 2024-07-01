@@ -2,8 +2,10 @@ namespace FuryTechs.DotCommerce.Core.Extensions;
 
 using FuryTechs.DotCommerce.Core.Database;
 using FuryTechs.DotCommerce.Core.GraphQL;
+using FuryTechs.DotCommerce.Core.Extensions;
 using HotChocolate.Execution.Configuration;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 /// <summary>
 /// Extensions for IServiceCollection class.
@@ -21,10 +23,6 @@ public static class ServiceCollectionExtensions
     IConfiguration configuration)
   {
     return services
-      .AddAuthorization(options =>
-      {
-        options.AddPolicy("Authenticated", builder => builder.RequireAuthenticatedUser());
-      })
       .AddGraphQLServer()
       .AddAuthorization()
       .AddMutationType<Mutations>()

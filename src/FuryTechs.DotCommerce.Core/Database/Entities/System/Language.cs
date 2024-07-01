@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+
 using FuryTechs.DotCommerce.Core.Database.Entities.Base;
-using FuryTechs.DotCommerce.Core.Database.Entities.Customer;
 
 namespace FuryTechs.DotCommerce.Core.Database.Entities.System;
 

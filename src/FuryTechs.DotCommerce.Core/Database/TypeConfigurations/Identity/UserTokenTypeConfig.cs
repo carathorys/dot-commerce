@@ -1,6 +1,6 @@
-using FuryTechs.DotCommerce.Core.Database.Entities.Base;
 using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 using FuryTechs.DotCommerce.Core.Database.TypeConfigurations.Base;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -13,19 +13,18 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "channel",
+                name: "country",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    token = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    country_code = table.Column<string>(type: "text", nullable: false),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_channel", x => x.id);
+                    table.PrimaryKey("pk_country", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,10 +206,91 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "channel",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    token = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    default_language_id = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_channel", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_channel_language_int_default_language_id",
+                        column: x => x.default_language_id,
+                        principalTable: "language",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "country_translation",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    language_id = table.Column<int>(type: "integer", nullable: false),
+                    country_name = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    base_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_country_translation", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_country_translation_country_base_id",
+                        column: x => x.base_id,
+                        principalTable: "country",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_country_translation_language_int_language_id",
+                        column: x => x.language_id,
+                        principalTable: "language",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "channels_languages",
+                columns: table => new
+                {
+                    available_languages_id = table.Column<int>(type: "integer", nullable: false),
+                    channel_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_channels_languages", x => new { x.available_languages_id, x.channel_id });
+                    table.ForeignKey(
+                        name: "fk_channels_languages_channel_channel_id",
+                        column: x => x.channel_id,
+                        principalTable: "channel",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_channels_languages_language_int_available_languages_id",
+                        column: x => x.available_languages_id,
+                        principalTable: "language",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "ix_channel_created_at",
                 table: "channel",
                 column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_channel_default_language_id",
+                table: "channel",
+                column: "default_language_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_channel_token",
@@ -222,6 +302,37 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 name: "ix_channel_updated_at",
                 table: "channel",
                 column: "updated_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_channels_languages_channel_id",
+                table: "channels_languages",
+                column: "channel_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_country_country_code",
+                table: "country",
+                column: "country_code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_country_created_at",
+                table: "country",
+                column: "created_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_country_updated_at",
+                table: "country",
+                column: "updated_at");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_country_translation_base_id",
+                table: "country_translation",
+                column: "base_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_country_translation_language_id",
+                table: "country_translation",
+                column: "language_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_identity_role_created_at",
@@ -351,7 +462,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "channel");
+                name: "channels_languages");
+
+            migrationBuilder.DropTable(
+                name: "country_translation");
 
             migrationBuilder.DropTable(
                 name: "identity_role_claim");
@@ -369,13 +483,19 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                 name: "identity_user_token");
 
             migrationBuilder.DropTable(
-                name: "language");
+                name: "channel");
+
+            migrationBuilder.DropTable(
+                name: "country");
 
             migrationBuilder.DropTable(
                 name: "identity_role");
 
             migrationBuilder.DropTable(
                 name: "identity_user");
+
+            migrationBuilder.DropTable(
+                name: "language");
         }
     }
 }

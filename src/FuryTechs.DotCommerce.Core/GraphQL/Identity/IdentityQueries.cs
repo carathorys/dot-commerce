@@ -2,7 +2,6 @@
 // Copyright (c) FuryTechs. All rights reserved.
 // </copyright>
 
-using FuryTechs.DotCommerce.Core.Database.Entities;
 using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Types;
 
@@ -11,9 +10,11 @@ namespace FuryTechs.DotCommerce.Identity.GraphQL;
 using System.Security.Claims;
 
 using FuryTechs.DotCommerce.Core.GraphQL;
+
 using HotChocolate;
 using HotChocolate.Authorization;
 using HotChocolate.Types;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 

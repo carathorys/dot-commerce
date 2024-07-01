@@ -17,10 +17,94 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country_code");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.HasKey("Id")
+                        .HasName("pk_country");
+
+                    b.HasIndex("CountryCode")
+                        .IsUnique()
+                        .HasDatabaseName("ix_country_country_code");
+
+                    b.HasIndex("CreatedAt")
+                        .HasDatabaseName("ix_country_created_at");
+
+                    b.HasIndex("UpdatedAt")
+                        .HasDatabaseName("ix_country_updated_at");
+
+                    b.ToTable("country", (string)null);
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("base_id");
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country_name");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("language_id");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_country_translation");
+
+                    b.HasIndex("BaseId")
+                        .HasDatabaseName("ix_country_translation_base_id");
+
+                    b.HasIndex("LanguageId")
+                        .HasDatabaseName("ix_country_translation_language_id");
+
+                    b.ToTable("country_translation", (string)null);
+                });
 
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<int>", b =>
                 {
@@ -418,6 +502,10 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("NOW()");
 
+                    b.Property<int>("DefaultLanguageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("default_language_id");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(512)
@@ -426,8 +514,8 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("token");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
@@ -441,6 +529,9 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
 
                     b.HasIndex("CreatedAt")
                         .HasDatabaseName("ix_channel_created_at");
+
+                    b.HasIndex("DefaultLanguageId")
+                        .HasDatabaseName("ix_channel_default_language_id");
 
                     b.HasIndex("Token")
                         .IsUnique()
@@ -501,6 +592,46 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                     b.ToTable("language", (string)null);
                 });
 
+            modelBuilder.Entity("channels_languages", b =>
+                {
+                    b.Property<int>("AvailableLanguagesId")
+                        .HasColumnType("integer")
+                        .HasColumnName("available_languages_id");
+
+                    b.Property<int>("ChannelId")
+                        .HasColumnType("integer")
+                        .HasColumnName("channel_id");
+
+                    b.HasKey("AvailableLanguagesId", "ChannelId")
+                        .HasName("pk_channels_languages");
+
+                    b.HasIndex("ChannelId")
+                        .HasDatabaseName("ix_channels_languages_channel_id");
+
+                    b.ToTable("channels_languages", (string)null);
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.CountryTranslation<int>", b =>
+                {
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", "Base")
+                        .WithMany("Translations")
+                        .HasForeignKey("BaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_country_translation_country_base_id");
+
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_country_translation_language_int_language_id");
+
+                    b.Navigation("Base");
+
+                    b.Navigation("Language");
+                });
+
             modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Identity.RoleClaim<int>", b =>
                 {
                     b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.Identity.Role<int>", null)
@@ -556,6 +687,40 @@ namespace FuryTechs.DotCommerce.WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_identity_user_token_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", b =>
+                {
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", "DefaultLanguage")
+                        .WithMany()
+                        .HasForeignKey("DefaultLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_channel_language_int_default_language_id");
+
+                    b.Navigation("DefaultLanguage");
+                });
+
+            modelBuilder.Entity("channels_languages", b =>
+                {
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Language<int>", null)
+                        .WithMany()
+                        .HasForeignKey("AvailableLanguagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_channels_languages_language_int_available_languages_id");
+
+                    b.HasOne("FuryTechs.DotCommerce.Core.Database.Entities.System.Channel<int>", null)
+                        .WithMany()
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_channels_languages_channel_channel_id");
+                });
+
+            modelBuilder.Entity("FuryTechs.DotCommerce.Core.Database.Entities.Customer.Country<int>", b =>
+                {
+                    b.Navigation("Translations");
                 });
 #pragma warning restore 612, 618
         }

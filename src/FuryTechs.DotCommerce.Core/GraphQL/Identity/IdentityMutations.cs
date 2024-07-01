@@ -6,11 +6,12 @@ using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 
 namespace FuryTechs.DotCommerce.Core.GraphQL.Identity;
 
-using FuryTechs.DotCommerce.Core.Database.Entities;
 using FuryTechs.DotCommerce.Core.Extensions;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Inputs;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Types;
+
 using HotChocolate.Authorization;
+
 using Microsoft.AspNetCore.Identity;
 
 /// <summary>

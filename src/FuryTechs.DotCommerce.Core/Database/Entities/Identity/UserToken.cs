@@ -4,7 +4,7 @@ using FuryTechs.DotCommerce.Core.Database.Entities.Base;
 using Microsoft.AspNetCore.Identity;
 
 /// <inheritdoc cref="IdentityUserToken{TKey}"/>
-public class UserToken<TKey> : IdentityUserToken<TKey>, ILogTimestamps, ILogicalDelete
+public class UserToken<TKey> : IdentityUserToken<TKey>, ILogTimestamps
   where TKey : IEquatable<TKey>
 {
   /// <inheritdoc/>
@@ -13,6 +13,4 @@ public class UserToken<TKey> : IdentityUserToken<TKey>, ILogTimestamps, ILogical
   /// <inheritdoc/>
   public DateTimeOffset UpdatedAt { get; set; }
 
-  /// <inheritdoc/>
-  public DateTimeOffset? DeletedAt { get; set; }
 }

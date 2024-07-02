@@ -7,7 +7,6 @@ namespace FuryTechs.DotCommerce.Core;
 using FuryTechs.DotCommerce.Core.Database;
 using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 using FuryTechs.DotCommerce.Core.Extensions;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +20,6 @@ public class Bootstrap<TKey, TDbContext>
     where TKey : IEquatable<TKey>
     where TDbContext : BaseDbContext<TKey>
 {
-
     /// <summary>
     /// Initializes a new instance of the <see cref="Bootstrap{TKey}"/> class.
     /// </summary>
@@ -50,10 +48,15 @@ public class Bootstrap<TKey, TDbContext>
             .AddJwtBearer();
 
         services.AddHttpContextAccessor();
-        services.AddDatabaseContext<TKey, TDbContext>(this.Configuration);
+        services.AddDatabaseContext<TKey, TDbContext>(Configuration);
+
         services
-          .AddPublicGraphqlEndpoint(this.Configuration)
-          .AddIdentity<TKey>();
+            .AddShopAPIEndpoint<TKey>(Configuration)
+            .AddIdentity<TKey>();
+
+        services
+            .AddAdminAPIEndpoint<TKey>(Configuration)
+            .AddIdentity<TKey>();
     }
 
     /// <summary>
@@ -63,10 +66,13 @@ public class Bootstrap<TKey, TDbContext>
     public void Configure(IApplicationBuilder app)
     {
         app
-           .UseAuthentication()
-           .UseAuthorization()
-           .UseRouting()
-           .UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+            .UseAuthentication()
+            .UseAuthorization()
+            .UseRouting()
+            .UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL("/graphql/admin-api", "adminSchema");
+                endpoints.MapGraphQL("/graphql/shop-api", "shopSchema");
+            });
     }
-
 }

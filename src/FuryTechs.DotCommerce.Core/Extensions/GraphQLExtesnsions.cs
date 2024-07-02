@@ -1,6 +1,5 @@
 using FuryTechs.DotCommerce.Core.GraphQL.Identity;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Types;
-using FuryTechs.DotCommerce.Identity.GraphQL;
 using HotChocolate.Execution.Configuration;
 using Microsoft.AspNetCore.Identity;
 
@@ -21,6 +20,7 @@ public static class Extensions
     where TKey : IEquatable<TKey>
   {
     return builder
+      .AddAuthorization()
       .AddTypeExtension<IdentityMutations<TKey>>()
       .AddTypeExtension<IdentityQueries<TKey>>()
       .AddType<LoginFailed>()

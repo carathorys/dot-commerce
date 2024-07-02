@@ -5,11 +5,9 @@
 using FuryTechs.DotCommerce.Core.Database.Entities.Identity;
 using FuryTechs.DotCommerce.Core.GraphQL.Identity.Types;
 
-namespace FuryTechs.DotCommerce.Identity.GraphQL;
+namespace FuryTechs.DotCommerce.Core.GraphQL.Identity;
 
 using System.Security.Claims;
-
-using FuryTechs.DotCommerce.Core.GraphQL;
 
 using HotChocolate;
 using HotChocolate.Authorization;
@@ -23,7 +21,7 @@ using Microsoft.AspNetCore.Identity;
 /// These methods will extend the existing <see cref="Queries" /> class.
 /// </summary>
 /// <typeparam name="TKey">Primary key type on identity tables.</typeparam>
-[ExtendObjectType<Queries>]
+[ExtendObjectType("Queries")]
 public class IdentityQueries<TKey>
   where TKey : IEquatable<TKey>
 {

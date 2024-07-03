@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        
+        {
+            "name": "FuryTechs.DotCommerce.WebAPI: FuryTechs.DotCommerce.WebAPI (1)",
+            "type": "dotnet-launch-settings",
+            "workingDir": "E:\\source\\dot-commerce\\src\\FuryTechs.DotCommerce.WebAPI",
+            "allowParallelRun": true,
+            "solutionPath": "E:\\source\\dot-commerce\\FuryTechs.DotCommerce.sln",
+            "projectPath": "E:\\source\\dot-commerce\\src\\FuryTechs.DotCommerce.WebAPI\\FuryTechs.DotCommerce.WebAPI.csproj",
+            "targetFramework": null,
+            "profileName": "FuryTechs.DotCommerce.WebAPI"
+        }
+    ]
+}

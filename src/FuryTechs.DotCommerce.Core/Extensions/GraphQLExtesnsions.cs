@@ -24,7 +24,7 @@ public static class Extensions
       .AddTypeExtension<IdentityMutations<TKey>>()
       .AddTypeExtension<IdentityQueries<TKey>>()
       .AddType<LoginFailed>()
-      .AddType<CurrentUser<TKey>>();
+      .AddType<CurrentUserType<TKey>>();
   }
 
   /// <summary>

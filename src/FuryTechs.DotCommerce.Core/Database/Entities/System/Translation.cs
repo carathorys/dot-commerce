@@ -5,6 +5,6 @@ namespace FuryTechs.DotCommerce.Core.Database.Entities.System;
 public class Translation<TKey, TSource, TDest> : DotCommerceEntity<TKey>
   where TKey : IEquatable<TKey>
 {
-    public Language<TKey> Language { get; set; }
-    public Channel<TKey> Channel { get; set; }
+    public required Language<TKey> Language { get; set; }
+    public required Channel<TKey> Channel { get; set; }
 }

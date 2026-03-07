@@ -41,5 +41,5 @@ public class Address<TKey> : DotCommerceEntity<TKey>
   public bool DefaultShippingAddress { get; set; }
   public bool DefaultBillingAddress { get; set; }
 
-  public Customer<TKey> Customer { get; set; }
+  public required Customer<TKey> Customer { get; set; }
 }

@@ -87,7 +87,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<TDbContext>(m => m
             .UseNpgsql(connectionString, e => e.MigrationsAssembly(typeof(TDbContext).Assembly.FullName))
-            .UseSnakeCaseNamingConvention()
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors()
             .EnableThreadSafetyChecks());

@@ -15,11 +15,11 @@ public class Language<TKey> : DotCommerceEntity<TKey>
   /// Name of the language (not translatable)
   /// </summary>
   [MaxLength(100)]
-  public string DisplayName { get; set; }
+  public required string DisplayName { get; set; }
   
   /// <summary>
   /// Code of the language
   /// </summary>
   [MaxLength(6)] 
-  public string Code { get; set; }
+  public required string Code { get; set; }
 }

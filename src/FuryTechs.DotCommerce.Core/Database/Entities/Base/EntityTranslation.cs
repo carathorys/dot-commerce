@@ -6,8 +6,8 @@ namespace FuryTechs.DotCommerce.Core.Database.Entities.Base
         where TKey : IEquatable<TKey>
         where TEntity : DotCommerceEntity<TKey>
     {
-        public TKey BaseId { get; set; }
-        public  TEntity Base { get; set; }
-        public Language<TKey> Language { get; set; }
+        public required TKey BaseId { get; set; }
+        public required TEntity Base { get; set; }
+        public virtual required Language<TKey> Language { get; set; }
     }
 }

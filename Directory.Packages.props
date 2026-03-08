@@ -25,5 +25,11 @@
     <!-- Third-party -->
     <PackageVersion Include="FuryTechs.BLM.EntityFrameworkCore" Version="7.0.0" />
     <PackageVersion Include="NetDevPack.Security.PasswordHasher.Argon2" Version="7.1.2" />
+
+    <!-- Testing -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="xunit" Version="2.6.6" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.6" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
   </ItemGroup>
 </Project>

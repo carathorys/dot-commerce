@@ -22,19 +22,12 @@ Docker (from `example/` directory):
 docker compose up --build         # Full environment: PostgreSQL 17 + API on port 8080
 ```
 
-## EF Core Migrations (Makefile)
-
-```bash
-make mc MIGRATION_NAME=MyMigration   # Create a new migration
-make rm                              # Remove last migration
-make up                              # Apply pending migrations to database
-```
-
-All migration commands target `--project src/FuryTechs.DotCommerce.WebAPI --context WebDbContext`.
-
 ## Testing
 
-No test projects exist yet (the solution has an empty `test` folder placeholder). When tests are added, standard .NET commands apply:
+Two unit test projects have been created in the `test` folder:
+- **FuryTechs.DotCommerce.Core.Tests** — Unit tests for core library types
+- **FuryTechs.DotCommerce.WebAPI.Tests** — Integration tests and API endpoint verification
+When running tests, use standard .NET commands:
 
 ```bash
 dotnet test                                          # Run all tests

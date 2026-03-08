@@ -60,6 +60,10 @@ public abstract class BaseDbContext<TKey> : IdentityDbContext<
                 builder.ApplyConfiguration((dynamic)configurationInstance);
             }
         }
+
+        // Apply snake_case naming convention to all database objects.
+        // Replaces EFCore.NamingConventions package which does not support .NET 10.
+        builder.ApplySnakeCaseNamingConvention();
     }
 }
 

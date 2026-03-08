@@ -1,0 +1,6 @@
+.git
+.idea
+.fleet
+**/bin
+**/obj
+example

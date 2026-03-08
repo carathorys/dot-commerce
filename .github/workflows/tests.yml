@@ -1,0 +1,36 @@
+name: .NET Tests
+
+on:
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'src/**/*.cs'
+      - 'test/**/*.cs'
+      - '*.sln'
+      - '**/*.csproj'
+
+jobs:
+  test:
+    name: .NET Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0'
+          cache-dependency-path: '**/*.csproj'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build the solution
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Test Core
+        run: dotnet test test/FuryTechs.DotCommerce.Core.Tests/FuryTechs.DotCommerce.Core.Tests.csproj --configuration Release --verbosity normal
+
+      - name: Test WebAPI
+        run: dotnet test test/FuryTechs.DotCommerce.WebAPI.Tests/FuryTechs.DotCommerce.WebAPI.Tests.csproj --configuration Release --verbosity normal
